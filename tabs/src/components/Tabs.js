@@ -3,16 +3,16 @@ import React from "react";
 const Tabs = (props) => {
     const { allTabs, currentTabIndex, setCurrentTabIndex } = props;
 
+    const setSelectedTab = (index) => {
+        setCurrentTabIndex(index);
+    }
+
     const tabStyle = (index) => {
         if (index === currentTabIndex) {
             return "selectedTab";
         } else {
             return "nonSelectedTab";
         }
-    }
-
-    const setSelectedTab = (index) => {
-        setCurrentTabIndex(index);
     }
 
     return (
