@@ -1,0 +1,70 @@
+Create a database called 'my_first_db'.
+use my_first_db
+
+Create students collection.
+db.createCollection('students')
+
+Each document you insert into this collection should have the following format: ({name: STRING, home_state: STRING, lucky_number: NUMBER, birthday: {month: NUMBER, day: NUMBER, year: NUMBER}})
+Create 5 students with the appropriate info.
+db.my_first_db.insert({name: "Nick", home_state: "California", lucky_number: "10", birthday: {month: "7", day: "9", year: "1997"}})
+db.my_first_db.insert({name: "Pri", home_state: "Washington", lucky_number: "1", birthday: {month: "8", day: "15", year: "1997"}})
+db.my_first_db.insert({name: "Alan", home_state: "California", lucky_number: "14", birthday: {month: "9", day: "1", year: "1964"}})
+db.my_first_db.insert({name: "Benji", home_state: "California", lucky_number: "2", birthday: {month: "8", day: "15", year: "2018"}})
+db.my_first_db.insert({name: "Sonia", home_state: "Washington", lucky_number: "3", birthday: {month: "12", day: "25", year: "1969"}})
+
+Get all students.
+db.my_first_db.find()
+
+
+Retrieve all students who are from California (San Jose Dojo) or Washington (Seattle Dojo).
+db.my_first_db.find({home_state: "California"})
+db.my_first_db.find({home_state: "Washington"})
+
+Get all students whose lucky number is greater than 3
+db.my_first_db.find({lucky_number: {$gt: 3}})
+
+Get all students whose lucky number is less than or equal to 10
+db.my_first_db.find({lucky_number: {$lte: 10}})
+
+Get all students whose lucky number is between 1 and 9 (inclusive)
+db.my_first_db.find({lucky_number: {$gt: 1, $lt: 9}})
+
+Add a field to each student collection called 'interests' that is an ARRAY. It should contain the following entries: 'coding', 'brunch', 'MongoDB'. Do this in ONE operation.
+db.my_first_db.update({_id: ObjectID("60515cb032caafa7132c8894", "60515cb732caafa7132c8895", "60515cbd32caafa7132c8896", "60515cc332caafa7132c8897", "60515cc832caafa7132c8898", )}, {$push: {interests: 'coding', 'brunch', MongoDb'}})
+
+Add some unique interests for each particular student into each of their interest arrays.
+db.my_first_db.update({_id: ObjectId("60515cb032caafa7132c8894")}, {$push: {interests: 'snowboarding'}})
+db.my_first_db.update({_id: ObjectId("60515cb032caafa7132c8895")}, {$push: {interests: 'sleeping'}})
+db.my_first_db.update({_id: ObjectId("60515cb032caafa7132c8896")}, {$push: {interests: 'ping pong'}})
+db.my_first_db.update({_id: ObjectId("60515cb032caafa7132c8897")}, {$push: {interests: 'netflix'}})
+db.my_first_db.update({_id: ObjectId("60515cb032caafa7132c8898")}, {$push: {interests: 'pilate'}})
+
+Add the interest 'taxes' into someone's interest array.
+db.my_first_db.update({_id: ObjectId("60515cb032caafa7132c8898")}, {$push: {interests: 'taxes'}})
+
+Remove the 'taxes' interest you just added.
+db.my_first_db.update({_id: ObjectId("60515cb032caafa7132c8898")}, {$pop: {array_key: (-1)}})
+
+Remove all students who are from California.
+db.my_first_db.remove({home_state: "California"})
+
+Remove a student by name.
+db.my_first_db.remove({name: "Nick"})
+
+Remove a student whose lucky number is greater than 5 (JUST ONE)
+db.my_first_db.remove({lucky_number: {$gt: 5}})
+
+Add a field to each student collection called 'number_of_belts' and set it to 0.
+db.my_first_db.insert({number_of_belts: "0"})
+
+Increment this field by 1 for all students in Washington (Seattle Dojo).
+db.my_first_db.find({home_state: "Washington"}).update({number_of_belts: 1})
+
+Rename the 'number_of_belts' field to 'belts_earned'
+db.my_first_db.update({number_of_belts})
+
+Remove the 'lucky_number' field.
+db.my_first_db.remove({"lucky_number"})
+
+Add a 'updated_on' field, and set the value as the current date.
+db.my_first_db.insert({updated_on: {$currentdDate}})
